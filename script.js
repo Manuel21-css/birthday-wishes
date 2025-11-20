@@ -21,9 +21,20 @@
       this.style.position = 'fixed';
     });
 
-    // Yes → show birthday page
-    document.getElementById('yesBtn').addEventListener('click', () => {
-      document.getElementById('questionScreen').style.display = 'none';
-      document.getElementById('birthdayPage').classList.add('show');
-      window.scrollTo(0, 0);
-    });
+    // YES → show birthday page + start music
+  const music = document.getElementById('bgMusic');
+  document.getElementById('yesBtn').addEventListener('click',()=>{
+    document.getElementById('questionScreen').style.display='none';
+    document.getElementById('birthdayPage').classList.add('show');
+    window.scrollTo(0,0);
+
+    music.volume = 0.35;           // soft & classy
+    music.play();                  // starts because user clicked
+  });
+
+  // STOP music automatically when she leaves the page
+  window.addEventListener('beforeunload', () => music.pause());
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) music.pause();    // stops if she switches apps
+    // optional: else music.play();        // resumes when she comes back
+  });
